@@ -27,8 +27,10 @@ BuildTextFormField({
   String? Function(String? value)? validate,
   bool isPassword = false,
   void Function()? onPressedOnSIcon,
+  TextInputType? type ,
 }) {
   return TextFormField(
+    keyboardType: type,
     controller: controller,
     decoration: InputDecoration(
       border: OutlineInputBorder(

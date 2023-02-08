@@ -118,6 +118,7 @@ class EditProfile extends StatelessWidget {
                                 pIcon: Icons.phone,
                                 labelEn: 'Phone',
                                 labelAr: 'الهاتف',
+                                type: TextInputType.phone,
                                 controller: phoneController,
                                 validate: (value) {
                                   if (value!.isEmpty) {

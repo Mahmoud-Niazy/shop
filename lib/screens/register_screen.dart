@@ -107,6 +107,7 @@ class RegisterScreen extends StatelessWidget {
                         BuildTextFormField(
                             pIcon: Icons.phone,
                             labelEn: 'Phone',
+                            type: TextInputType.phone,
                             labelAr: 'الهاتف',
                             controller: phoneController,
                             validate: (value) {
