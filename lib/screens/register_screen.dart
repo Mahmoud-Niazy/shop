@@ -1,3 +1,4 @@
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -119,20 +120,25 @@ class RegisterScreen extends StatelessWidget {
                         SizedBox(
                           height: 40,
                         ),
-                        BuildButton(
-                          labelEn: 'Register',
-                          labelAr: 'انشاء حساب',
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {
-                              RegisterCubit.get(context).UserRegister(
-                                name: nameController.text,
-                                email: emailController.text,
-                                password: passwordController.text,
-                                phone: phoneController.text,
-                              );
-
-                            }
-                          },
+                        ConditionalBuilder(
+                          condition: state is! UserRegisterLoadingState,
+                          builder:(context)=> BuildButton(
+                            labelEn: 'Register',
+                            labelAr: 'انشاء حساب',
+                            onPressed: () {
+                              if (formKey.currentState!.validate()) {
+                                RegisterCubit.get(context).UserRegister(
+                                  name: nameController.text,
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  phone: phoneController.text,
+                                );
+                              }
+                            },
+                          ),
+                          fallback: (context) => Center(
+                            child: CircularProgressIndicator(),
+                          ),
                         ),
                       ],
                     ),

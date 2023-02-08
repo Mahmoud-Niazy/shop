@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_final/constants/constants.dart';
 import 'package:shop_final/dio_helper/dio.dart';
 import 'package:shop_final/constants/end_points.dart';
 import 'package:shop_final/data_models/user_login_data.dart';
@@ -80,7 +79,10 @@ class LoginCubit extends Cubit<LoginStates> {
             .doc("$uId")
             .set(cloudUserData!.toMap())
             .then((value) {
-
+          ShopCubit.get(context).GetUserData();
+          // ShopCubit.get(context).GetUserDataFromFirestore(
+          //   uId: CasheHelper.GetData(key: 'uId'),
+          // );
 
         }).catchError((error) {
           emit(UploadUserDataToFirestoreErrorState());

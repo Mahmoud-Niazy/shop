@@ -124,6 +124,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           ShopCubit.get(context).cartsData = null ;
                           ShopCubit.get(context).favorites = null ;
                           ShopCubit.get(context).categories = null ;
+                          ShopCubit.get(context).userData= null ;
 
                           ShopCubit.get(context).GetHomeData();
                           ShopCubit.get(context).GetAllCarts();
