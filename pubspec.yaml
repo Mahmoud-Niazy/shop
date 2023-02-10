@@ -46,6 +46,10 @@ dependencies:
   cloud_firestore: any
   image_picker: any
   firebase_storage: any
+  google_maps_flutter: ^2.2.3
+  geolocator: any
+  awesome_dialog: any
+
 
 
 

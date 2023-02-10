@@ -1,3 +1,4 @@
+import 'dart:collection';
 import 'dart:io';
 
 import 'package:bloc/bloc.dart';
@@ -5,8 +6,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:location/location.dart';
 import 'package:shop_final/constants/end_points.dart';
 import 'package:shop_final/data_models/carts_data_model.dart';
 import 'package:shop_final/data_models/categories_model.dart';
@@ -338,37 +340,95 @@ class ShopCubit extends Cubit<ShopStates> {
 
   double latitude = 0;
   double longitude = 0;
-
-  GetUserLocation(context) async {
+  var myPosition ;
+  Future<Position> GetUserLocation() async {
+    bool serviceEnabled;
+    LocationPermission permission;
     emit(GetUserLocationLoadingState());
 
-    Location location = new Location();
+    // Test if location services are enabled.
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // Location services are not enabled don't continue
+      // accessing the position and request users of the
+      // App to enable the location services.
+      return Future.error('Location services are disabled.');
+    }
 
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-    LocationData _locationData;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        emit(GetUserLocationErrorState());
-        return null;
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission == LocationPermission.denied) {
+        // Permissions are denied, next time you could try
+        // requesting permissions again (this is also where
+        // Android's shouldShowRequestPermissionRationale
+        // returned true. According to Android guidelines
+        // your App should show an explanatory UI now.
+        return Future.error('Location permissions are denied');
       }
     }
 
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        emit(GetUserLocationErrorState());
-        return null;
-      }
+    if (permission == LocationPermission.deniedForever) {
+      // Permissions are denied forever, handle appropriately.
+      return Future.error(
+          'Location permissions are permanently denied, we cannot request permissions.');
     }
-    ;
-    _locationData = await location.getLocation();
-    latitude = _locationData.latitude!;
-    longitude = _locationData.longitude!;
+
+    // When we reach here, permissions are granted and we can
+    // continue accessing the position of the device.
+    myPosition= await Geolocator.getCurrentPosition();
+    latitude = myPosition.latitude!;
+    longitude = myPosition.longitude!;
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc('${userData!.data!.id}')
+        .collection('location')
+        .add({
+      'longitude': myPosition.longitude,
+      'latitude': myPosition.latitude,
+    }).then((value) {
+      emit(GetUserLocationSuccessfullyState());
+    }).catchError((error) {
+      emit(GetUserLocationErrorState());
+    });
+    return myPosition;
+
+
+
+  }
+  // GetUserLocation(context) async {
+  //   emit(GetUserLocationLoadingState());
+  //
+  //   Location location = new Location();
+  //
+  //   bool _serviceEnabled;
+  //   PermissionStatus _permissionGranted;
+  //   LocationData _locationData;
+  //
+  //   _serviceEnabled = await location.serviceEnabled();
+  //   if (!_serviceEnabled) {
+  //     _serviceEnabled = await location.requestService();
+  //     if (!_serviceEnabled) {
+  //       emit(GetUserLocationErrorState());
+  //       return null;
+  //     }
+  //   }
+  //
+  //   _permissionGranted = await location.hasPermission();
+  //   if (_permissionGranted == PermissionStatus.denied) {
+  //     _permissionGranted = await location.requestPermission();
+  //     if (_permissionGranted != PermissionStatus.granted) {
+  //       emit(GetUserLocationErrorState());
+  //       return null;
+  //     }
+  //   }
+
+    // _locationData = await location.getLocation();
+
+
+
+
+
     // CloudUserData userWithLocation = CloudUserData(
     //   name: userData!.data!.name,
     //   image: cloudUserData!.image,
@@ -378,18 +438,22 @@ class ShopCubit extends Cubit<ShopStates> {
     //   // latitude: _locationData.latitude!,
     //   uId: ShopCubit.get(context).userData!.data!.id,
     // );
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc('${userData!.data!.id}')
-        .collection('location')
-        .add({
-      'longitude': _locationData.longitude,
-      'latitude': _locationData.latitude,
-    }).then((value) {
-      emit(GetUserLocationSuccessfullyState());
-    }).catchError((error) {
-      emit(GetUserLocationErrorState());
-    });
+
+
+    // FirebaseFirestore.instance
+    //     .collection('users')
+    //     .doc('${userData!.data!.id}')
+    //     .collection('location')
+    //     .add({
+    //   'longitude': _locationData.longitude,
+    //   'latitude': _locationData.latitude,
+    // }).then((value) {
+    //   emit(GetUserLocationSuccessfullyState());
+    // }).catchError((error) {
+    //   emit(GetUserLocationErrorState());
+    // });
+
+
     //     .doc("${ShopCubit
     //     .get(context)
     //     .userData!
@@ -404,9 +468,10 @@ class ShopCubit extends Cubit<ShopStates> {
     //
     //   print(error);
     // });
-    print(_locationData.latitude);
-    print(_locationData.longitude);
-  }
+
+    // print(_locationData.latitude);
+    // print(_locationData.longitude);
+
 
 
   Order(){
@@ -424,4 +489,38 @@ class ShopCubit extends Cubit<ShopStates> {
       emit(UploadOrderErrorState());
     });
   }
+
+
+int i =1;
+  var markerAuto = HashSet<Marker>();
+  addMarkerToShopLocation(){
+    markerAuto.add(
+      Marker(
+        markerId: MarkerId('0'),
+        position: LatLng(30.033333, 31.233334)
+      ),
+    );
+  }
+
+  AddMarkerToUserLocation({
+    required double lat,
+    required double lng ,
+}){
+    // markerAuto.removeWhere((element) => element.mapsId == '1');
+    // emit(RemoveMarkerState());
+
+
+    markerAuto.clear();
+    addMarkerToShopLocation();
+
+    markerAuto.add(
+      Marker(
+          markerId: MarkerId('$i'),
+          position: LatLng(lat,lng),
+      ),
+    );
+    emit(MarkerState());
+  }
+
 }
+
