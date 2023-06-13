@@ -75,4 +75,7 @@ class DeleteDataErrorState extends ShopStates{}
 class MarkerState extends ShopStates{}
 
 
+class ChangeColorState  extends ShopStates{}
+
+
 

@@ -51,24 +51,27 @@ class ShopCubit extends Cubit<ShopStates> {
   HomeData? homeData;
 
   GetHomeData() {
-    emit(GetHomeDataLoadingState());
-    DioHelper.GetData(
-      url: HOME,
-      token: token,
-    ).then((value) {
-      homeData = HomeData.fromJson(value.data);
-      print(homeData!.data.banners[0].id);
-      emit(GetHomeDataSuccessfullyState());
-    }).catchError((error) {
-      print(error);
-      emit(GetHomeDataErrorState());
-    });
+    if(homeData == null){
+      emit(GetHomeDataLoadingState());
+      DioHelper.GetData(
+        url: HOME,
+        token: token,
+      ).then((value) {
+        homeData = HomeData.fromJson(value.data);
+        print(homeData!.data.banners[0].id);
+        emit(GetHomeDataSuccessfullyState());
+      }).catchError((error) {
+        print(error);
+        emit(GetHomeDataErrorState());
+      });
+    }
+
   }
 
   AddRemoveFavorites({
     required int id,
   }) {
-    homeData = null ;
+    // homeData = null ;
     emit(AddOrRemoveFavoritesLoadingState());
     DioHelper.PostData(
       url: FAVORITES,
@@ -78,12 +81,18 @@ class ShopCubit extends Cubit<ShopStates> {
       token: token,
     ).then((value) {
       GetAllFavorites();
-      GetHomeData();
+      // GetHomeData();
       emit(AddOrRemoveFavoritesSuccessfullyState());
     }).catchError((error) {
       emit(AddOrRemoveFavoritesErrorState());
     });
   }
+
+  // bool isFav = false ;
+  // ChangeColor(){
+  //   isFav =! isFav ;
+  //   emit(ChangeColorState());
+  // }
 
   FavoritesModel? favorites;
 
@@ -118,7 +127,6 @@ class ShopCubit extends Cubit<ShopStates> {
   AddOrRemoveInCart({
     required int pId ,
 }) {
-    homeData = null ;
     emit(AddOrRemoveCartsLoadingState());
     DioHelper.PostData(
       url: CART,
@@ -128,7 +136,6 @@ class ShopCubit extends Cubit<ShopStates> {
       }
     ).then((value) {
       GetAllCarts();
-      GetHomeData();
       emit(AddOrRemoveCartsSuccessfullyState());
     }).catchError((error) {
       emit(AddOrRemoveCartsErrorState());
@@ -191,25 +198,25 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 
-  CloudUserData? cloudUserData;
-
-  GetUserDataFromFirestore({
-    required int uId,
-  }) {
-    emit(GetUserDataFromFirestoreLoadingState());
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc("$uId")
-        .get()
-        .then((value) {
-      cloudUserData = CloudUserData.fromJson(value.data()!);
-    }).then((value) {
-      emit(GetUserDataFromFirestoreSuccessfullyState());
-    }).catchError((error) {
-      print(error);
-      emit(GetUserDataFromFirestoreErrorState());
-    });
-  }
+  // CloudUserData? cloudUserData;
+  //
+  // GetUserDataFromFirestore({
+  //   required int uId,
+  // }) {
+  //   emit(GetUserDataFromFirestoreLoadingState());
+  //   FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc("$uId")
+  //       .get()
+  //       .then((value) {
+  //     cloudUserData = CloudUserData.fromJson(value.data()!);
+  //   }).then((value) {
+  //     emit(GetUserDataFromFirestoreSuccessfullyState());
+  //   }).catchError((error) {
+  //     print(error);
+  //     emit(GetUserDataFromFirestoreErrorState());
+  //   });
+  // }
 
   UserLoginData? userData;
 

@@ -40,8 +40,9 @@ class EditProfile extends StatelessWidget {
         emailController.text = ShopCubit.get(context).userData!.data!.email;
         phoneController.text = ShopCubit.get(context).userData!.data!.phone;
         return ConditionalBuilder(
-          condition: ShopCubit.get(context).userData != null &&
-              ShopCubit.get(context).cloudUserData != null,
+          condition: ShopCubit.get(context).userData != null ,
+              // &&
+              // ShopCubit.get(context).cloudUserData != null,
           builder: (context) => Scaffold(
             appBar: AppBar(
               title: const Text(
@@ -60,29 +61,29 @@ class EditProfile extends StatelessWidget {
                           key: formKey,
                           child: Column(
                             children: [
-                              Stack(
-                                alignment: Alignment.bottomRight,
-                                children: [
-                                  CircleAvatar(
-                                    radius: 60,
-                                    backgroundImage: ProfileImage(context),
-                                  ),
-                                  CircleAvatar(
-                                    child: IconButton(
-                                      icon: Icon(Icons.edit),
-                                      onPressed: () {
-                                        ShopCubit.get(context)
-                                            .GetProfileImage()
-                                            .then((value) {})
-                                            .catchError((error) {
-                                          print(error);
-                                        });
-                                      },
-                                    ),
-                                    backgroundColor: Colors.blueAccent,
-                                  ),
-                                ],
-                              ),
+                              // Stack(
+                              //   alignment: Alignment.bottomRight,
+                              //   children: [
+                              //     // CircleAvatar(
+                              //     //   radius: 60,
+                              //     //   backgroundImage: ProfileImage(context),
+                              //     // ),
+                              //     CircleAvatar(
+                              //       child: IconButton(
+                              //         icon: Icon(Icons.edit),
+                              //         onPressed: () {
+                              //           ShopCubit.get(context)
+                              //               .GetProfileImage()
+                              //               .then((value) {})
+                              //               .catchError((error) {
+                              //             print(error);
+                              //           });
+                              //         },
+                              //       ),
+                              //       backgroundColor: Colors.blueAccent,
+                              //     ),
+                              //   ],
+                              // ),
                               SizedBox(
                                 height: 50,
                               ),
@@ -129,6 +130,9 @@ class EditProfile extends StatelessWidget {
                               SizedBox(
                                 height: 30,
                               ),
+                              state is UpdateUserDataLoadingState ?
+                              Center(child: CircularProgressIndicator())
+                              :
                               BuildButton(
                                   labelEn: 'UPDATE',
                                   labelAr: 'تحديث',
@@ -141,19 +145,19 @@ class EditProfile extends StatelessWidget {
                                           email: emailController.text,
                                           phone: phoneController.text,
                                         );
-                                        ShopCubit.get(context)
-                                            .UpdateDataInFirestore(
-                                          uId: ShopCubit.get(context)
-                                              .userData!
-                                              .data!
-                                              .id,
-                                          name: nameController.text,
-                                          email: emailController.text,
-                                          phone: phoneController.text,
-                                          image: ShopCubit.get(context)
-                                              .cloudUserData!
-                                              .image,
-                                        );
+                                        // ShopCubit.get(context)
+                                        //     .UpdateDataInFirestore(
+                                        //   uId: ShopCubit.get(context)
+                                        //       .userData!
+                                        //       .data!
+                                        //       .id,
+                                        //   name: nameController.text,
+                                        //   email: emailController.text,
+                                        //   phone: phoneController.text,
+                                        //   image: ShopCubit.get(context)
+                                        //       .cloudUserData!
+                                        //       .image,
+                                        // );
                                       }
                                       if (ShopCubit.get(context).image !=
                                           null) {
@@ -224,6 +228,9 @@ class EditProfile extends StatelessWidget {
                               SizedBox(
                                 height: 30,
                               ),
+                              state is ChangePasswordLoadingState ?
+                              Center(child: CircularProgressIndicator())
+                              :
                               BuildButton(
                                   labelEn: 'Update Password',
                                   labelAr: 'تحديث كلمة المرور',
@@ -253,12 +260,12 @@ class EditProfile extends StatelessWidget {
   }
 }
 
-ProfileImage(context) {
-  if (ShopCubit.get(context).image != null) {
-    return FileImage(ShopCubit.get(context).image!);
-  } else {
-    return NetworkImage(
-      ShopCubit.get(context).cloudUserData!.image,
-    );
-  }
-}
+// ProfileImage(context) {
+//   if (ShopCubit.get(context).image != null) {
+//     return FileImage(ShopCubit.get(context).image!);
+//   } else {
+//     return NetworkImage(
+//       ShopCubit.get(context).userData!.,
+//     );
+//   }
+// }

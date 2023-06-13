@@ -25,16 +25,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
       },
       builder: (context, state) {
         return ConditionalBuilder(
-          condition: ShopCubit.get(context).userData != null && ShopCubit.get(context).cloudUserData != null,
+          condition: ShopCubit.get(context).userData != null ,
+              // && ShopCubit.get(context).cloudUserData != null,
           builder: (context) => Center(
             child: Padding(
               padding: const EdgeInsets.all(15),
               child: Column(
                 children: [
-                  CircleAvatar(
-                    radius: 60,
-                    backgroundImage: ProfileImage(context),
-                  ),
+                  // CircleAvatar(
+                  //   radius: 60,
+                  //   backgroundImage: ProfileImage(context),
+                  // ),
                   SizedBox(
                     height: 20,
                   ),
@@ -87,7 +88,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             await CasheHelper.RemoveData(key: 'uId');
                             ShopCubit.get(context).userData = null;
                             ShopCubit.get(context).favorites = null;
-                            ShopCubit.get(context).cloudUserData = null;
+                            // ShopCubit.get(context).cloudUserData = null;
                             ShopCubit.get(context).homeData = null;
                             ShopCubit.get(context).cartsData = null;
                             ShopCubit.get(context).image = null ;
@@ -146,17 +147,17 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 }
 
-ProfileImage(context) {
-  if (ShopCubit.get(context).image != null) {
-    return FileImage(ShopCubit.get(context).image!);
-  } else {
-    return NetworkImage(
-      ShopCubit.get(context).cloudUserData!.image,
-    );
-    // if (ShopCubit.get(context).cloudUserData != null)
-    //
-    // return NetworkImage(
-    //   'https://img.freepik.com/premium-photo/tiny-cute-adorable-animal_727939-188.jpg?size=338&ext=jpg&ga=GA1.2.190088039.1657057581',
-    // );
-  }
-}
+// ProfileImage(context) {
+//   if (ShopCubit.get(context).image != null) {
+//     return FileImage(ShopCubit.get(context).image!);
+//   } else {
+//     return NetworkImage(
+//       ShopCubit.get(context).cloudUserData!.image,
+//     );
+//     // if (ShopCubit.get(context).cloudUserData != null)
+//     //
+//     // return NetworkImage(
+//     //   'https://img.freepik.com/premium-photo/tiny-cute-adorable-animal_727939-188.jpg?size=338&ext=jpg&ga=GA1.2.190088039.1657057581',
+//     // );
+//   }
+// }

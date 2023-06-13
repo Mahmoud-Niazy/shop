@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
             ..GetAllCategories()
             ..GetUserData()
             ..GetAllCarts()
-            ..GetUserDataFromFirestore(uId:CasheHelper.GetData(key: 'uId') ),
+            // ..GetUserDataFromFirestore(uId:CasheHelper.GetData(key: 'uId') ),
         ),
         BlocProvider(
           create: (context) => LoginCubit(),

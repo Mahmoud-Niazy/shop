@@ -184,6 +184,7 @@ GridItem(ProductsData item, context) {
                     Spacer(),
                     InkWell(
                       onTap: (){
+                        item.in_cart = !item.in_cart ;
                         ShopCubit.get(context).AddOrRemoveInCart(pId: item.id);
                       },
                       child: Container(
@@ -201,6 +202,7 @@ GridItem(ProductsData item, context) {
                     ),
                     IconButton(
                       onPressed: () {
+                        item.in_favorites = !item.in_favorites;
                         ShopCubit.get(context).AddRemoveFavorites(id: item.id);
                       },
                       icon: CircleAvatar(

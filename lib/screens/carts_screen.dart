@@ -84,8 +84,8 @@ class CartsScreen extends StatelessWidget {
                     labelEn: 'Order',
                     labelAr: 'اطلب',
                     onPressed: () {
-                      if(ShopCubit.get(context).cartsData!.data!.cart_items.length >0)
-                      ShopCubit.get(context).Order();
+                      // if(ShopCubit.get(context).cartsData!.data!.cart_items.length >0)
+                      // ShopCubit.get(context).Order();
                     },
                   ),
                 ],

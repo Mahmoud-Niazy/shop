@@ -32,16 +32,16 @@ class _LoginScreenState extends State<LoginScreen> {
           if (state.userData!.status) {
             CasheHelper.SaveData(key: 'uId', value: state.userData!.data!.id);
             uId = CasheHelper.GetData(key: 'uId');
-            LoginCubit.get(context).UploadUserData(
-              context,
-              uId: state.userData!.data!.id,
-              name: state.userData!.data!.name,
-              email: state.userData!.data!.email,
-              phone: state.userData!.data!.phone,
-              image: state.userData!.data!.image,
-              // longitude: 0,
-              // latitude: 0,
-            );
+            // LoginCubit.get(context).UploadUserData(
+            //   context,
+            //   uId: state.userData!.data!.id,
+            //   name: state.userData!.data!.name,
+            //   email: state.userData!.data!.email,
+            //   phone: state.userData!.data!.phone,
+            //   image: state.userData!.data!.image,
+            //   // longitude: 0,
+            //   // latitude: 0,
+            // );
 
             CasheHelper.SaveData(
                 key: 'token', value: state.userData!.data!.token);

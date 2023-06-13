@@ -42,59 +42,59 @@ class LoginCubit extends Cubit<LoginStates> {
     });
   }
 
-  CloudUserData? cloudUserData;
-
-  UploadUserData(
-    context, {
-    required int uId,
-    required String name,
-    required String email,
-    required String phone,
-    required String image,
-    // required double longitude,
-    // required double latitude ,
-  }) {
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc('${uId}')
-        .get()
-        .then((value) {
-      if (value.exists) {
-        ShopCubit.get(context)
-            .GetUserDataFromFirestore(uId: CasheHelper.GetData(key: 'uId'));
-      }
-
-      if (!value.exists) {
-        cloudUserData = CloudUserData(
-          name: name,
-          image: image,
-          email: email,
-          phone: phone,
-          // longitude: longitude,
-          // latitude: latitude,
-          uId: uId,
-        );
-        FirebaseFirestore.instance
-            .collection('users')
-            .doc("$uId")
-            .set(cloudUserData!.toMap())
-            .then((value) {
-          ShopCubit.get(context).GetUserData();
-          // ShopCubit.get(context).GetUserDataFromFirestore(
-          //   uId: CasheHelper.GetData(key: 'uId'),
-          // );
-
-        }).catchError((error) {
-          emit(UploadUserDataToFirestoreErrorState());
-        });
-
-        ShopCubit.get(context).GetUserDataFromFirestore(
-          uId: CasheHelper.GetData(key: 'uId'),
-        );
-        // ShopCubit.get(context).GetUserDataFromFirestore(
-        //     uId: CasheHelper.GetData(key: 'uId')
-        // );
-      }
-    });
-  }
+//   CloudUserData? cloudUserData;
+//
+//   UploadUserData(
+//     context, {
+//     required int uId,
+//     required String name,
+//     required String email,
+//     required String phone,
+//     required String image,
+//     // required double longitude,
+//     // required double latitude ,
+//   }) {
+//     FirebaseFirestore.instance
+//         .collection('users')
+//         .doc('${uId}')
+//         .get()
+//         .then((value) {
+//       if (value.exists) {
+//         ShopCubit.get(context)
+//             .GetUserDataFromFirestore(uId: CasheHelper.GetData(key: 'uId'));
+//       }
+//
+//       if (!value.exists) {
+//         cloudUserData = CloudUserData(
+//           name: name,
+//           image: image,
+//           email: email,
+//           phone: phone,
+//           // longitude: longitude,
+//           // latitude: latitude,
+//           uId: uId,
+//         );
+//         FirebaseFirestore.instance
+//             .collection('users')
+//             .doc("$uId")
+//             .set(cloudUserData!.toMap())
+//             .then((value) {
+//           ShopCubit.get(context).GetUserData();
+//           // ShopCubit.get(context).GetUserDataFromFirestore(
+//           //   uId: CasheHelper.GetData(key: 'uId'),
+//           // );
+//
+//         }).catchError((error) {
+//           emit(UploadUserDataToFirestoreErrorState());
+//         });
+//
+//         ShopCubit.get(context).GetUserDataFromFirestore(
+//           uId: CasheHelper.GetData(key: 'uId'),
+//         );
+//         // ShopCubit.get(context).GetUserDataFromFirestore(
+//         //     uId: CasheHelper.GetData(key: 'uId')
+//         // );
+//       }
+//     });
+//   }
 }

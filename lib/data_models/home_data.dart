@@ -42,6 +42,7 @@ class ProductsData{
   late String name ;
   late bool in_favorites ;
   late bool in_cart ;
+  // bool isFav = false;
 
   ProductsData.fromJson(Map<String,dynamic>json){
     id = json['id'] ;
@@ -52,5 +53,7 @@ class ProductsData{
     name = json['name'] ;
     in_favorites = json['in_favorites'] ;
     in_cart = json['in_cart'] ;
+    // isFav = json['isFav'] ;
+
   }
 }
