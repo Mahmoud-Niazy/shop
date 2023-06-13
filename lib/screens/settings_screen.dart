@@ -91,7 +91,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             // ShopCubit.get(context).cloudUserData = null;
                             ShopCubit.get(context).homeData = null;
                             ShopCubit.get(context).cartsData = null;
-                            ShopCubit.get(context).image = null ;
+                            // ShopCubit.get(context).image = null ;
                             NavigateAndFinish(LoginScreen(), context);
                           }
                         });

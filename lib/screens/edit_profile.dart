@@ -138,13 +138,18 @@ class EditProfile extends StatelessWidget {
                                   labelAr: 'تحديث',
                                   onPressed: () {
                                     if (formKey.currentState!.validate()) {
-                                      if (ShopCubit.get(context).image ==
-                                          null) {
-                                        ShopCubit.get(context).UpdateUserData(
-                                          name: nameController.text,
-                                          email: emailController.text,
-                                          phone: phoneController.text,
-                                        );
+                                      ShopCubit.get(context).UpdateUserData(
+                                        name: nameController.text,
+                                        email: emailController.text,
+                                        phone: phoneController.text,
+                                      );
+                                      // if (ShopCubit.get(context).image ==
+                                      //     null) {
+                                      //   ShopCubit.get(context).UpdateUserData(
+                                      //     name: nameController.text,
+                                      //     email: emailController.text,
+                                      //     phone: phoneController.text,
+                                      //   );
                                         // ShopCubit.get(context)
                                         //     .UpdateDataInFirestore(
                                         //   uId: ShopCubit.get(context)
@@ -159,20 +164,20 @@ class EditProfile extends StatelessWidget {
                                         //       .image,
                                         // );
                                       }
-                                      if (ShopCubit.get(context).image !=
-                                          null) {
-                                        ShopCubit.get(context)
-                                            .UploadProfileImage(
-                                          uId: ShopCubit.get(context)
-                                              .userData!
-                                              .data!
-                                              .id,
-                                          name: nameController.text,
-                                          email: emailController.text,
-                                          phone: phoneController.text,
-                                        );
-                                      }
-                                    }
+                                      // if (ShopCubit.get(context).image !=
+                                      //     null) {
+                                      //   ShopCubit.get(context)
+                                      //       .UploadProfileImage(
+                                      //     uId: ShopCubit.get(context)
+                                      //         .userData!
+                                      //         .data!
+                                      //         .id,
+                                      //     name: nameController.text,
+                                      //     email: emailController.text,
+                                      //     phone: phoneController.text,
+                                      //   );
+                                      // }
+                                    // }
                                   }),
                             ],
                           ),

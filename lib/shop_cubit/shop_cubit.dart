@@ -297,53 +297,53 @@ class ShopCubit extends Cubit<ShopStates> {
     });
   }
 
-  File? image;
-
-  var picker = ImagePicker();
-
-  Future GetProfileImage() async {
-    emit(GetProfileImageLoadingState());
-    final pickedFile = await picker.getImage(
-      source: ImageSource.gallery,
-    );
-    if (pickedFile != null) {
-      image = File(pickedFile.path);
-      emit(GetProfileImageSuccessfullyState());
-    } else {
-      emit(GetProfileImageErrorState());
-      print('No image selected');
-    }
-  }
-
-  UploadProfileImage({
-    required int uId,
-    required String name,
-    required String email,
-    required String phone,
-  }) {
-    emit(UploadProfileImageLoadingState());
-    FirebaseStorage.instance
-        .ref()
-        .child('users/${Uri.file(image!.path).pathSegments.last}')
-        .putFile(image!)
-        .then((value) {
-      value.ref.getDownloadURL().then((value) {
-        UpdateDataInFirestore(
-          uId: uId,
-          name: name,
-          email: email,
-          phone: phone,
-          image: value,
-        );
-        UpdateUserData(name: name, email: email, phone: phone, image: value);
-      });
-
-      emit(UploadProfileImageSuccessfullyState());
-    }).catchError((error) {
-      print(error);
-      emit(UploadProfileImageErrorState());
-    });
-  }
+  // File? image;
+  //
+  // var picker = ImagePicker();
+  //
+  // Future GetProfileImage() async {
+  //   emit(GetProfileImageLoadingState());
+  //   final pickedFile = await picker.getImage(
+  //     source: ImageSource.gallery,
+  //   );
+  //   if (pickedFile != null) {
+  //     image = File(pickedFile.path);
+  //     emit(GetProfileImageSuccessfullyState());
+  //   } else {
+  //     emit(GetProfileImageErrorState());
+  //     print('No image selected');
+  //   }
+  // }
+  //
+  // UploadProfileImage({
+  //   required int uId,
+  //   required String name,
+  //   required String email,
+  //   required String phone,
+  // }) {
+  //   emit(UploadProfileImageLoadingState());
+  //   FirebaseStorage.instance
+  //       .ref()
+  //       .child('users/${Uri.file(image!.path).pathSegments.last}')
+  //       .putFile(image!)
+  //       .then((value) {
+  //     value.ref.getDownloadURL().then((value) {
+  //       UpdateDataInFirestore(
+  //         uId: uId,
+  //         name: name,
+  //         email: email,
+  //         phone: phone,
+  //         image: value,
+  //       );
+  //       UpdateUserData(name: name, email: email, phone: phone, image: value);
+  //     });
+  //
+  //     emit(UploadProfileImageSuccessfullyState());
+  //   }).catchError((error) {
+  //     print(error);
+  //     emit(UploadProfileImageErrorState());
+  //   });
+  // }
 
   double latitude = 0;
   double longitude = 0;
@@ -481,21 +481,21 @@ class ShopCubit extends Cubit<ShopStates> {
 
 
 
-  Order(){
-    emit(UploadOrderLoadingState());
-    FirebaseFirestore
-    .instance
-        .collection('users')
-        .doc('${CasheHelper.GetData(key: 'uId')}')
-        .collection('orders')
-        .add(carts)
-    .then((value){
-      emit(UploadOrderSuccessfullyState());
-    })
-    .catchError((error){
-      emit(UploadOrderErrorState());
-    });
-  }
+  // Order(){
+  //   emit(UploadOrderLoadingState());
+  //   FirebaseFirestore
+  //   .instance
+  //       .collection('users')
+  //       .doc('${CasheHelper.GetData(key: 'uId')}')
+  //       .collection('orders')
+  //       .add(carts)
+  //   .then((value){
+  //     emit(UploadOrderSuccessfullyState());
+  //   })
+  //   .catchError((error){
+  //     emit(UploadOrderErrorState());
+  //   });
+  // }
 
 
 int i =1;

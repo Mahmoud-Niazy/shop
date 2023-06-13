@@ -42,10 +42,10 @@ dependencies:
   location: any
   url_launcher: any
   cached_network_image: any
-  firebase_core: ^2.4.1
-  cloud_firestore: any
+#  firebase_core: ^2.4.1
+#  cloud_firestore: any
   image_picker: any
-  firebase_storage: any
+#  firebase_storage: any
   google_maps_flutter: ^2.2.3
   geolocator: any
   awesome_dialog: any
