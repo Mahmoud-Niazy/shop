@@ -9,11 +9,11 @@ import 'package:shop_final/screens/login_screen.dart';
 import '../register_cubit/register_states.dart';
 
 class RegisterScreen extends StatelessWidget {
-  var nameController = TextEditingController();
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
-  var phoneController = TextEditingController();
-  var formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final phoneController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +65,7 @@ class RegisterScreen extends StatelessWidget {
                               if (value!.isEmpty) {
                                 return 'Name can\'t be empty ';
                               }
+                              return null;
                             }),
                         SizedBox(
                           height: 15,
@@ -78,6 +79,7 @@ class RegisterScreen extends StatelessWidget {
                               if (value!.isEmpty) {
                                 return 'Email can\'t be empty ';
                               }
+                              return null;
                             }),
                         SizedBox(
                           height: 15,
@@ -90,6 +92,7 @@ class RegisterScreen extends StatelessWidget {
                             if (value!.isEmpty) {
                               return 'Password can\'t be empty ';
                             }
+                            return null;
                           },
                           controller: passwordController,
                           onPressedOnSIcon: () {
@@ -114,6 +117,7 @@ class RegisterScreen extends StatelessWidget {
                               if (value!.isEmpty) {
                                 return 'Phone can\'t be empty ';
                               }
+                              return null;
                             }),
                         SizedBox(
                           height: 15,

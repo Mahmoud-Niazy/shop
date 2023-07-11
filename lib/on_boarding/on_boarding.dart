@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_final/constants/constants.dart';
-import 'package:shop_final/functions/fucnctions.dart';
+import 'package:shop_final/widgets/widgets.dart';
 import 'package:shop_final/screens/login_screen.dart';
 import 'package:shop_final/reusable_components/reusable_components.dart';
 import 'package:shop_final/shared_preferences/shared_preferences.dart';

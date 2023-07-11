@@ -8,13 +8,13 @@ import '../shop_cubit/shop_cubit.dart';
 import '../shop_cubit/shop_states.dart';
 
 class EditProfile extends StatelessWidget {
-  var nameController = TextEditingController();
-  var emailController = TextEditingController();
-  var phoneController = TextEditingController();
-  var currentPasswordController = TextEditingController();
-  var newPasswordController = TextEditingController();
-  var formKey1 = GlobalKey<FormState>();
-  var formKey = GlobalKey<FormState>();
+  final nameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final currentPasswordController = TextEditingController();
+  final newPasswordController = TextEditingController();
+  final formKey1 = GlobalKey<FormState>();
+  final formKey = GlobalKey<FormState>();
 
   EditProfile({super.key});
 
@@ -96,6 +96,7 @@ class EditProfile extends StatelessWidget {
                                   if (value!.isEmpty) {
                                     return 'Name can\'t be empty ';
                                   }
+                                  return null;
                                 },
                               ),
                               SizedBox(
@@ -110,6 +111,7 @@ class EditProfile extends StatelessWidget {
                                   if (value!.isEmpty) {
                                     return 'Email can\'t be empty ';
                                   }
+                                  return null;
                                 },
                               ),
                               SizedBox(
@@ -125,6 +127,7 @@ class EditProfile extends StatelessWidget {
                                   if (value!.isEmpty) {
                                     return 'Phone can\'t be empty ';
                                   }
+                                  return null;
                                 },
                               ),
                               SizedBox(
@@ -206,6 +209,7 @@ class EditProfile extends StatelessWidget {
                                   if (value!.isEmpty) {
                                     return 'Current Password can\'t be empty ';
                                   }
+                                  return null;
                                 },
                               ),
                               SizedBox(
@@ -228,6 +232,7 @@ class EditProfile extends StatelessWidget {
                                   if (value!.isEmpty) {
                                     return 'New Password can\'t be empty ';
                                   }
+                                  return null;
                                 },
                               ),
                               SizedBox(

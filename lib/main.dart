@@ -7,13 +7,12 @@ import 'package:shop_final/screens/shop_layout.dart';
 import 'package:shop_final/shared_preferences/shared_preferences.dart';
 import 'package:shop_final/shop_cubit/shop_cubit.dart';
 import 'constants/constants.dart';
-import 'package:firebase_core/firebase_core.dart';
 
 import 'login_cubit/login_cubit.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  // await Firebase.initializeApp();
   await CasheHelper.Init();
   DioHelper.Init();
   Widget widget;
@@ -34,7 +33,7 @@ void main() async {
 }
 
 class MyApp extends StatelessWidget {
-  Widget widget;
+  final Widget widget;
 
   MyApp(this.widget);
 
@@ -56,6 +55,7 @@ class MyApp extends StatelessWidget {
         ),
       ],
       child: MaterialApp(
+        debugShowCheckedModeBanner: false,
         home: widget,
         theme: ThemeData(
           appBarTheme: AppBarTheme(

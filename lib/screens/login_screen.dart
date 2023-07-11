@@ -8,7 +8,7 @@ import 'package:shop_final/screens/shop_layout.dart';
 import 'package:shop_final/shared_preferences/shared_preferences.dart';
 import 'package:shop_final/shop_cubit/shop_cubit.dart';
 
-import '../functions/fucnctions.dart';
+import '../widgets/widgets.dart';
 import '../login_cubit/login_cubit.dart';
 import '../login_cubit/login_states.dart';
 
@@ -133,6 +133,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ? 'Email can\'t be empty '
                                 : 'الايميل فارغ';
                           }
+                          return null;
                         },
                       ),
                       SizedBox(
@@ -156,6 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ? 'Password can\'t be empty '
                                 : 'كلمة المرور فارغة';
                           }
+                          return null;
                         },
                       ),
                       SizedBox(

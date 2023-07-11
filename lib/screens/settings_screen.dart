@@ -7,9 +7,9 @@ import 'package:shop_final/screens/login_screen.dart';
 import 'package:shop_final/shared_preferences/shared_preferences.dart';
 
 import '../constants/constants.dart';
-import '../functions/fucnctions.dart';
 import '../shop_cubit/shop_cubit.dart';
 import '../shop_cubit/shop_states.dart';
+import '../widgets/widgets.dart';
 
 class SettingsScreen extends StatefulWidget {
   @override

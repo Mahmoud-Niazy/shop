@@ -1,28 +1,22 @@
 import 'dart:collection';
-import 'dart:io';
 
-import 'package:bloc/bloc.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shop_final/constants/end_points.dart';
 import 'package:shop_final/data_models/carts_data_model.dart';
 import 'package:shop_final/data_models/categories_model.dart';
 import 'package:shop_final/data_models/change_password_data_model.dart';
 import 'package:shop_final/data_models/favorites_model.dart';
 import 'package:shop_final/data_models/home_data.dart';
-import 'package:shop_final/data_models/user_data_in_firestore.dart';
 import 'package:shop_final/dio_helper/dio.dart';
 import 'package:shop_final/screens/carts_screen.dart';
 import 'package:shop_final/screens/your_location_screen.dart';
 import 'package:shop_final/screens/favorites_screen.dart';
 import 'package:shop_final/screens/home_screen.dart';
 import 'package:shop_final/screens/settings_screen.dart';
-import 'package:shop_final/shared_preferences/shared_preferences.dart';
 import 'package:shop_final/shop_cubit/shop_states.dart';
 
 import '../constants/constants.dart';
@@ -270,32 +264,32 @@ class ShopCubit extends Cubit<ShopStates> {
     emit(ChangePasswordVisibilityState());
   }
 
-  UpdateDataInFirestore({
-    required int uId,
-    required String name,
-    required String email,
-    required String phone,
-    required String image,
-  }) {
-    CloudUserData newUserData = CloudUserData(
-      name: name,
-      image: image,
-      email: email,
-      phone: phone,
-      // longitude: longitude,
-      // latitude: latitude,
-      uId: uId,
-    );
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc('$uId')
-        .update(newUserData.toMap())
-        .then((value) {
-      print('Upload new Data');
-    }).catchError((error) {
-      print(error);
-    });
-  }
+  // UpdateDataInFirestore({
+  //   required int uId,
+  //   required String name,
+  //   required String email,
+  //   required String phone,
+  //   required String image,
+  // }) {
+  //   CloudUserData newUserData = CloudUserData(
+  //     name: name,
+  //     image: image,
+  //     email: email,
+  //     phone: phone,
+  //     // longitude: longitude,
+  //     // latitude: latitude,
+  //     uId: uId,
+  //   );
+  //   FirebaseFirestore.instance
+  //       .collection('users')
+  //       .doc('$uId')
+  //       .update(newUserData.toMap())
+  //       .then((value) {
+  //     print('Upload new Data');
+  //   }).catchError((error) {
+  //     print(error);
+  //   });
+  // }
 
   // File? image;
   //
@@ -348,7 +342,7 @@ class ShopCubit extends Cubit<ShopStates> {
   double latitude = 0;
   double longitude = 0;
   var myPosition ;
-  Future<Position> GetUserLocation() async {
+  Future<Position?> GetUserLocation() async {
     bool serviceEnabled;
     LocationPermission permission;
     emit(GetUserLocationLoadingState());
@@ -383,22 +377,31 @@ class ShopCubit extends Cubit<ShopStates> {
 
     // When we reach here, permissions are granted and we can
     // continue accessing the position of the device.
-    myPosition= await Geolocator.getCurrentPosition();
-    latitude = myPosition.latitude!;
-    longitude = myPosition.longitude!;
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc('${userData!.data!.id}')
-        .collection('location')
-        .add({
-      'longitude': myPosition.longitude,
-      'latitude': myPosition.latitude,
-    }).then((value) {
+    try{
+      myPosition= await Geolocator.getCurrentPosition();
+      latitude = myPosition.latitude!;
+      longitude = myPosition.longitude!;
       emit(GetUserLocationSuccessfullyState());
-    }).catchError((error) {
+      return myPosition;
+    }
+    catch(error){
       emit(GetUserLocationErrorState());
-    });
-    return myPosition;
+      print(error.toString());
+      return null ;
+    }
+
+    // FirebaseFirestore.instance
+    //     .collection('users')
+    //     .doc('${userData!.data!.id}')
+    //     .collection('location')
+    //     .add({
+    //   'longitude': myPosition.longitude,
+    //   'latitude': myPosition.latitude,
+    // }).then((value) {
+    //   emit(GetUserLocationSuccessfullyState());
+    // }).catchError((error) {
+    //   emit(GetUserLocationErrorState());
+    // });
 
 
 

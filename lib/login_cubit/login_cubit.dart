@@ -1,11 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shop_final/dio_helper/dio.dart';
 import 'package:shop_final/constants/end_points.dart';
 import 'package:shop_final/data_models/user_login_data.dart';
-import '../data_models/user_data_in_firestore.dart';
-import '../shared_preferences/shared_preferences.dart';
-import '../shop_cubit/shop_cubit.dart';
 import 'login_states.dart';
 
 class LoginCubit extends Cubit<LoginStates> {

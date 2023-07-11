@@ -18,6 +18,7 @@ class _OurLocationScreenState extends State<OurLocationScreen> {
 
   @override
   void initState() {
+    super.initState();
     ShopCubit.get(context).addMarkerToShopLocation();
     ShopCubit.get(context).AddMarkerToUserLocation(
       lng: ShopCubit.get(context).longitude,
